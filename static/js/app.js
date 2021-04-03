@@ -109,8 +109,23 @@ function fn_barChart(subjectID){
 // 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 // ------------------------------------------------------------------------------------
 
-// <insert code to display metadata>
+function fn_displayData(subjectID) {
+  d3.json("samples.json").then((data) => {
+    var metadata = data.metadata;
 
+    // Filter the data for the selected ID number 
+    var filteredData = metadata.filter(object => object.id == subjectID);
+    var result = filteredData[0];
+    
+    // Use d3 to select the panel with id of `#sample-metadata`
+    //   example: expected data for reference:  
+    //   "metadata":[{"id": 940, "ethnicity": "Caucasian", 
+    //   "gender": "F", "age": 24.0, "location": "Beaufort/NC", 
+    //   "bbtype": "I", "wfreq": 2.0}
+
+    var panelInfo = d3.select("#sample-metadata");
+    // Test / display data
+    console.log(panelInfo)
 
 // ------------------------------------------------------------------------------------
 // 6.  Update all of the plots any time that a new sample is selected. 
