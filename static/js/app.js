@@ -43,53 +43,52 @@ function initialize(){
 // 2. Create a horizontal bar chart for selected Subject ID to display 
 //      the top 1O OTUs found in that individual.
 // ---------------------------------------------------------------------
+  function fn_barChart(subjectID){
+      d3.json('samples.json').then((data)=>{
+          var samples = data.samples;
 
-function fn_barChart(subjectID){
-  d3.json('samples.json').then((data)=>{
-      var samples = data.samples;
+          // Test / display data
+          console.log(samples)
+  
+          var ID = samples.map(row=>row.id).indexOf(subjectID);
 
-      // Test / display data
-      console.log(samples)
+          console.log(ID)
 
-      var ID = samples.map(row=>row.id).indexOf(subjectID);
+          // Use otu_ids as the labels for the bar chart.
+          var otuID = samples.map(row=>row.otu_ids);
+          var otuIDTopTen = otuID[ID].slice(0,10);
 
-      console.log(ID)
+          console.log(otuIDTopTen)
 
-      // Use otu_ids as the labels for the bar chart.
-      var otuID = samples.map(row=>row.otu_ids);
-      var otuIDTopTen = otuID[ID].slice(0,10);
+          // Use sample_values as the values for the bar chart.
+          var sampleValue = samples.map(row=>row.sample_values);
+          var sampleValueTopTen = sampleValue[ID].slice(0,10);
+          
+          // Use otu_labels as the hovertext for the chart.
+          var otuLabelTopTen = samples.map(row=>row.otu_labels).slice(0,10);
+          
+          var trace={
+              x: sampleValueTopTen,
+              y: otuIDTopTen.map(otu =>`OTU ${otu}  `),
+              text: otuLabelTopTen,
+              type:'bar'
+          }
+          // ------------------------------------------
+          // Setup chart layout with title & margins
+          // ------------------------------------------
+          var barLayout = {
+            title: "Top 10 OTUs",
+            xaxis: {title: "Sample Values"},
+            // yaxis: { title: "OTU IDs"},
+            margin: {t: 80, l: 175}
+          };
 
-      console.log(otuIDTopTen)
-
-      // Use sample_values as the values for the bar chart.
-      var sampleValue = samples.map(row=>row.sample_values);
-      var sampleValueTopTen = sampleValue[ID].slice(0,10);
-      
-      // Use otu_labels as the hovertext for the chart.
-      var otuLabelTopTen = samples.map(row=>row.otu_labels).slice(0,10);
-      
-      var trace={
-          x: sampleValueTopTen,
-          y: otuIDTopTen.map(otu =>`OTU ${otu}  `),
-          text: otuLabelTopTen,
-          type:'bar'
-      }
-      // ------------------------------------------
-      // Setup chart layout with title & margins
-      // ------------------------------------------
-      var barLayout = {
-        title: "Top 10 OTUs",
-        xaxis: {title: "Sample Values"},
-        // yaxis: { title: "OTU IDs"},
-        margin: {t: 80, l: 175}
-      };
-
-      // ------------------------------------------
-      // Display the bar chart            
-      // ------------------------------------------
-      Plotly.newPlot('bar', [trace], barLayout);
-  })
-};
+          // ------------------------------------------
+          // Display the bar chart            
+          // ------------------------------------------
+          Plotly.newPlot('bar', [trace], barLayout);
+      })
+  };
 
 // ------------------------------------------------------------------------------------
 // 3. Create a bubble chart that displays each sample.   
@@ -100,15 +99,12 @@ function fn_barChart(subjectID){
 //    Use otu_labels for the text values.
 // ------------------------------------------------------------------------------------
 
-// <insert code to display bubble chart>
-
-
+// insert code for bubble chart
 
 // ------------------------------------------------------------------------------------
 // 4. Display the sample metadata, i.e., an individual's demographic information.
 // 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 // ------------------------------------------------------------------------------------
-
 function fn_displayData(subjectID) {
   d3.json("samples.json").then((data) => {
     var metadata = data.metadata;
@@ -118,7 +114,7 @@ function fn_displayData(subjectID) {
     var result = filteredData[0];
     
     // Use d3 to select the panel with id of `#sample-metadata`
-    //   example: expected data for reference:  
+    //   example data for reference:  
     //   "metadata":[{"id": 940, "ethnicity": "Caucasian", 
     //   "gender": "F", "age": 24.0, "location": "Beaufort/NC", 
     //   "bbtype": "I", "wfreq": 2.0}
@@ -127,11 +123,33 @@ function fn_displayData(subjectID) {
     // Test / display data
     console.log(panelInfo)
 
+    // Clear any existing metadata
+    panelInfo.html("");
+
+    // Add & display key and value pair to the Demographic panel
+    // ** use div tag to wrap the data
+    Object.entries(result).forEach(([key, value]) => {
+      panelInfo.append('div').text(`${key}: ${value}`);
+    });
+
+  });
+} 
+
+// ************************************************************************************
+// ** Advanced Challenge -- Optional
+// ************************************************************************************
+//    Adapt the Gauge Chart from https://plot.ly/javascript/gauge-charts/ to plot 
+//      the weekly washing frequency of the individual.
+//    Modify the example gauge code to account for values ranging from 0 through 9.
+//    Update the chart whenever a new sample is selected.
+// ************************************************************************************
+// insert code for bubble chart
+
+
 // ------------------------------------------------------------------------------------
 // 6.  Update all of the plots any time that a new sample is selected. 
 //     NOTE:  optionChanged ==> Reference line 25 in the index.html 
 // ------------------------------------------------------------------------------------
 
-// <insert code to display metadata>
 
 initialize ();
