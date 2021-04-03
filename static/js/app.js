@@ -12,7 +12,7 @@
 // 1. Use the D3 library to read in data from 'samples.json' file.
 // Note:  From index.html, select id="selDataset" 
 // ---------------------------------------------------------------
-function fn_initialize(){
+function initialize(){
   var dropdownList = d3.selectAll('#selDataset');
 
   d3.json('samples.json').then((data)=>{
@@ -73,3 +73,5 @@ function fn_initialize(){
 // ------------------------------------------------------------------------------------
 
 // <insert code to display metadata>
+
+initialize ();
