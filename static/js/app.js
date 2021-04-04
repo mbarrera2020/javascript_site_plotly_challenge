@@ -245,10 +245,10 @@ function fn_gaugeChart(subjectID) {
                 {range: [8, 9], color: "#00677F"}
               ],  
 
-              threshold: {
-                line: {color: "green", width: 10},
-                thickness: 1.0,
-                value: 9}
+              // threshold: {
+              //   line: {color: "green", width: 10},
+              //   thickness: 1.0,
+              //   value: 9}
 
             }  
           }  
