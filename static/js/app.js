@@ -35,7 +35,8 @@ function initialize(){
   
       fn_displayData(defaultID);
       fn_barChart(defaultID);
-      fn_bubbleChart(defaultID)
+      fn_bubbleChart(defaultID);
+      fn_gaugeChart(defaultID);
 
     });
    };
@@ -190,8 +191,71 @@ function fn_displayData(subjectID) {
 //    Modify the example gauge code to account for values ranging from 0 through 9.
 //    Update the chart whenever a new sample is selected.
 // ************************************************************************************
-// insert code for bubble chart
+function fn_gaugeChart(subjectID) {
+  d3.json("samples.json").then((data) => {
+      var metadata = data.metadata;
 
+      // Filter the data for the selected ID number 
+
+      var filteredData = metadata.filter(object => object.id == subjectID);
+      var result = filteredData[0];
+      console.log(result);
+
+      var wfreqValue = result.wfreq;
+      console.log(wfreqValue);
+
+      var data = [
+          {
+            domain: { x: [0, 1], y: [0, 1] },
+            type: "indicator",
+            mode: "gauge+number",
+            number: {'suffix': "  (scrubs per week)", 'font': {'size': 16}},
+            value: wfreqValue,
+            text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+            title: {text: "Belly Button Washing Frequency", color: "black", font: {size: 16}},
+            // title: {text: "Scrubs per Week", font: { size: 12}},
+            gauge: {
+              axis: {range: [0, 9], tickwidth: 1, tickcolor: "black"}, 
+              bar: {color: "EDC8A3"},  
+              bgcolor: "white",
+              borderwidth: 1,
+              bordercolor: "black",
+              // color reference:  https://www.rapidtables.com/web/color/Yellow_Color.html
+              steps: [
+                {range: [0, 1], color: "#FFFFE0"},    //lightyellow
+                {range: [1, 2], color: "#FFFACD"},    
+                {range: [2, 3], color: "#FAFAD2"},    
+                {range: [3, 4], color: "#FFEFD5"},
+                {range: [4, 5], color: "#FFE4B5"},
+                {range: [5, 6], color: "#FFDAB9"},
+                {range: [6, 7], color: "#F0E68C"},
+                {range: [7, 8], color: "#BDB76B"},
+                {range: [8, 9], color: "#808000"}
+              ],
+
+              threshold: {
+                line: {color: "green", width: 10},
+                thickness: 1.0,
+                value: 9}
+
+            }  
+          }  
+        ];
+        
+        var gaugeLayout = {
+          width: 400,
+          height: 350,
+          margin: {t: 20, r: 20, l: 20, b: 20},
+          paper_bgcolor: "white",
+          // paper_bgcolor: "lightgray",
+          font: {color: "black", family: "Arial"}
+        };  
+
+      // Display gauge chart             
+      Plotly.newPlot("gauge", data, gaugeLayout);
+  
+});
+}
 
 // ------------------------------------------------------------------------------------
 // 6.  Update all of the plots any time that a new sample is selected. 
@@ -201,6 +265,7 @@ function optionChanged(newSelection) {
   fn_displayData(newSelection);
   fn_barChart(newSelection);
   fn_bubbleChart(newSelection);
+  fn_gaugeChart(newSelection);
 };
 
 initialize ();
