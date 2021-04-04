@@ -140,7 +140,7 @@ function fn_bubbleChart(subjectID){
           yaxis: {title: 'Sample Values'},
           showlegend: false,
           height: 500,
-          width: 1000
+          width: 1200
           };
 
       // Display bubble chart             
