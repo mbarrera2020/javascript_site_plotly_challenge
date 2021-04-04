@@ -209,17 +209,16 @@ function fn_gaugeChart(subjectID) {
             domain: { x: [0, 1], y: [0, 1] },
             type: "indicator",
             mode: "gauge+number",
-            number: {'suffix': "  (scrubs per week)", 'font': {'size': 16}},
             value: wfreqValue,
-            //text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
             title: {text: "Belly Button Washing Frequency", color: "black", font: {size: 16}},
-            // title: {text: "Scrubs per Week", font: { size: 12}},
+            number: {'suffix': "  (scrubs per week)", 'font': {'size': 16}},
+            //text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
             gauge: {
-              axis: {range: [0, 9], tickwidth: 1, tickcolor: "black"}, 
-              bar: {color: "EDC8A3"},  
+              axis: {range: [0, 9], tickwidth: 3, tickcolor: "black"}, 
+              bar: {color: "EDC8A3", thickness: .4},  
               bgcolor: "white",
-              borderwidth: 1,
-              bordercolor: "black",
+              borderwidth: 2,
+              bordercolor: "white",
               // color reference:  https://www.rapidtables.com/web/color/Yellow_Color.html
               // steps: [
               //   {range: [0, 1], color: "#FFFFE0"},    //lightyellow
@@ -232,8 +231,8 @@ function fn_gaugeChart(subjectID) {
               //   {range: [7, 8], color: "#BDB76B"},
               //   {range: [8, 9], color: "#808000"}
 
-                // color reference:  
-                // https://www.color-meanings.com/wp-content/uploads/color-chart.png
+              // color reference:  
+              // https://www.color-meanings.com/wp-content/uploads/color-chart.png
               steps: [
                 {range: [0, 1], color: "#B9D9EB"},    //light blue
                 {range: [1, 2], color: "#99D6EA"},    
@@ -257,7 +256,7 @@ function fn_gaugeChart(subjectID) {
         
         var gaugeLayout = {
           width: 400,
-          height: 350,
+          height: 300,
           margin: {t: 20, r: 20, l: 20, b: 20},
           paper_bgcolor: "white",
           // paper_bgcolor: "lightgray",
