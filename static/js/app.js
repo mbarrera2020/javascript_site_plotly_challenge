@@ -221,17 +221,30 @@ function fn_gaugeChart(subjectID) {
               borderwidth: 1,
               bordercolor: "black",
               // color reference:  https://www.rapidtables.com/web/color/Yellow_Color.html
+              // steps: [
+              //   {range: [0, 1], color: "#FFFFE0"},    //lightyellow
+              //   {range: [1, 2], color: "#FFFACD"},    
+              //   {range: [2, 3], color: "#FAFAD2"},    
+              //   {range: [3, 4], color: "#FFEFD5"},
+              //   {range: [4, 5], color: "#FFE4B5"},
+              //   {range: [5, 6], color: "#FFDAB9"},
+              //   {range: [6, 7], color: "#F0E68C"},
+              //   {range: [7, 8], color: "#BDB76B"},
+              //   {range: [8, 9], color: "#808000"}
+
+              // color reference:  
+              // https://www.color-meanings.com/wp-content/uploads/color-chart.png
               steps: [
-                {range: [0, 1], color: "#FFFFE0"},    //lightyellow
-                {range: [1, 2], color: "#FFFACD"},    
-                {range: [2, 3], color: "#FAFAD2"},    
-                {range: [3, 4], color: "#FFEFD5"},
-                {range: [4, 5], color: "#FFE4B5"},
-                {range: [5, 6], color: "#FFDAB9"},
-                {range: [6, 7], color: "#F0E68C"},
-                {range: [7, 8], color: "#BDB76B"},
-                {range: [8, 9], color: "#808000"}
-              ],
+                {range: [0, 1], color: "#B9D9EB"},    //light blue
+                {range: [1, 2], color: "#99D6EA"},    
+                {range: [2, 3], color: "#9ADBE8"},    
+                {range: [3, 4], color: "#6AD1E3"},
+                {range: [4, 5], color: "#05C3DE"},
+                {range: [5, 6], color: "#00A9CE"},
+                {range: [6, 7], color: "#0092BC"},
+                {range: [7, 8], color: "#007FA3"},
+                {range: [8, 9], color: "#00677F"}
+              ],  
 
               threshold: {
                 line: {color: "green", width: 10},
@@ -256,6 +269,7 @@ function fn_gaugeChart(subjectID) {
   
 });
 }
+
 
 // ------------------------------------------------------------------------------------
 // 6.  Update all of the plots any time that a new sample is selected. 
