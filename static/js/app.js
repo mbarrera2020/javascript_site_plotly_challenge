@@ -35,6 +35,7 @@ function initialize(){
   
       fn_displayData(defaultID);
       fn_barChart(defaultID);
+      fn_bubbleChart(defaultID)
 
     });
    };
@@ -99,8 +100,55 @@ function fn_barChart(subjectID){
 //    Use otu_ids for the marker colors.
 //    Use otu_labels for the text values.
 // ------------------------------------------------------------------------------------
+function fn_bubbleChart(subjectID){
+  d3.json('samples.json').then((data)=>{
+      var samples=data.samples;
 
-// insert code for bubble chart
+      // Test / display data
+      console.log(samples)
+  
+      var ID = samples.map(row=>row.id).indexOf(subjectID);
+      console.log(ID)
+
+      var otuIDs = samples.map(row => row.otu_ids);
+      var otuIDs = otuIDs[ID];            
+      console.log(otuIDs)
+
+      var sampleValues = samples.map(row => row.sample_values);
+      var sampleValues = sampleValues[ID];
+      console.log(sampleValues)
+
+      var otuLabels = samples.map(row => row.otu_labels);
+      var otuLabels = otuLabels[ID];
+      console.log(otuLabels)
+
+      var trace = {
+          x: otuIDs,
+          y: sampleValues,
+          text: otuLabels,
+          mode: 'markers',
+          marker: {
+            size: sampleValues, 
+            color: otuIDs
+            }
+          };                       
+      
+      var data = [trace]
+          
+      var bubbleLayout = {
+          xaxis: {title: 'OTU IDs'},
+          yaxis: {title: 'Sample Values'},
+          showlegend: false,
+          height: 300,
+          width: 500
+          };
+
+      // Display bubble chart             
+      Plotly.newPlot('bubble', data, bubbleLayout);
+  })
+};
+
+
 
 // ------------------------------------------------------------------------------------
 // 4. Display the sample metadata, i.e., an individual's demographic information.
