@@ -148,8 +148,6 @@ function fn_bubbleChart(subjectID){
   })
 };
 
-
-
 // ------------------------------------------------------------------------------------
 // 4. Display the sample metadata, i.e., an individual's demographic information.
 // 5. Display each key-value pair from the metadata JSON object somewhere on the page.
@@ -199,6 +197,10 @@ function fn_displayData(subjectID) {
 // 6.  Update all of the plots any time that a new sample is selected. 
 //     NOTE:  optionChanged ==> Reference line 25 in the index.html 
 // ------------------------------------------------------------------------------------
-
+function optionChanged(newSelection) {
+  fn_displayData(newSelection);
+  fn_barChart(newSelection);
+  fn_bubbleChart(newSelection);
+};
 
 initialize ();
