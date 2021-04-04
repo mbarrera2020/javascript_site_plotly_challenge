@@ -71,7 +71,8 @@ function fn_barChart(subjectID){
           x: sampleValueTopTen,
           y: otuIDTopTen.map(otu =>`OTU ${otu}  `),
           text: otuLabelTopTen,
-          type:'bar'
+          type:'bar',
+          orientation:'h'
       }
       // ------------------------------------------
       // Setup chart layout with title & margins
