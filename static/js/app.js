@@ -12,7 +12,7 @@
 // 1. Use the D3 library to read in data from 'samples.json' file.
 // Note:  From index.html, select id="selDataset" 
 // ---------------------------------------------------------------
-function initialize(){
+function fn_initialize(){
   var dropdownList = d3.selectAll('#selDataset');
 
   d3.json('samples.json').then((data)=>{
@@ -45,53 +45,53 @@ function initialize(){
 // 2. Create a horizontal bar chart for selected Subject ID to display 
 //      the top 1O OTUs found in that individual.
 // ---------------------------------------------------------------------
-function fn_barChart(subjectID){
-  d3.json('samples.json').then((data)=>{
-      var samples = data.samples;
+  function fn_barChart(subjectID){
+      d3.json('samples.json').then((data)=>{
+          var samples = data.samples;
 
-      // Test / display data
-      console.log(samples)
+          // Test / display data
+          console.log(samples)
+  
+          var ID = samples.map(row=>row.id).indexOf(subjectID);
 
-      var ID = samples.map(row=>row.id).indexOf(subjectID);
+          console.log(ID)
 
-      console.log(ID)
+          // Use otu_ids as the labels for the bar chart.
+          var otuID = samples.map(row=>row.otu_ids);
+          var otuIDTopTen = otuID[ID].slice(0,10).reverse();
 
-      // Use otu_ids as the labels for the bar chart.
-      var otuID = samples.map(row=>row.otu_ids);
-      var otuIDTopTen = otuID[ID].slice(0,10).reverse();
+          console.log(otuIDTopTen)
 
-      console.log(otuIDTopTen)
+          // Use sample_values as the values for the bar chart.
+          var sampleValue = samples.map(row=>row.sample_values);
+          var sampleValueTopTen = sampleValue[ID].slice(0,10).reverse();
+          
+          // Use otu_labels as the hovertext for the chart.
+          var otuLabelTopTen = samples.map(row=>row.otu_labels).slice(0,10);
+          
+          var trace={
+              x: sampleValueTopTen,
+              y: otuIDTopTen.map(otu =>`OTU ${otu}  `),
+              text: otuLabelTopTen,
+              type:'bar',
+              orientation:'h'
+          }
+          // ------------------------------------------
+          // Setup chart layout with title & margins
+          // ------------------------------------------
+          var barLayout = {
+            title: "Top 10 OTUs",
+            xaxis: {title: "Sample Values"},
+            // yaxis: { title: "OTU IDs"},
+            margin: {t: 80, l: 175}
+          };
 
-      // Use sample_values as the values for the bar chart.
-      var sampleValue = samples.map(row=>row.sample_values);
-      var sampleValueTopTen = sampleValue[ID].slice(0,10).reverse();
-      
-      // Use otu_labels as the hovertext for the chart.
-      var otuLabelTopTen = samples.map(row=>row.otu_labels).slice(0,10);
-      
-      var trace={
-          x: sampleValueTopTen,
-          y: otuIDTopTen.map(otu =>`OTU ${otu}  `),
-          text: otuLabelTopTen,
-          type:'bar',
-          orientation:'h'
-      }
-      // ------------------------------------------
-      // Setup chart layout with title & margins
-      // ------------------------------------------
-      var barLayout = {
-        title: "Top 10 OTUs",
-        xaxis: {title: "Sample Values"},
-        // yaxis: { title: "OTU IDs"},
-        margin: {t: 80, l: 175}
-      };
-
-      // ------------------------------------------
-      // Display the bar chart            
-      // ------------------------------------------
-      Plotly.newPlot('bar', [trace], barLayout);
-  })
-};
+          // ------------------------------------------
+          // Display the bar chart            
+          // ------------------------------------------
+          Plotly.newPlot('bar', [trace], barLayout);
+      })
+  };
 
 // ------------------------------------------------------------------------------------
 // 3. Create a bubble chart that displays each sample.   
@@ -211,7 +211,7 @@ function fn_gaugeChart(subjectID) {
             mode: "gauge+number",
             number: {'suffix': "  (scrubs per week)", 'font': {'size': 16}},
             value: wfreqValue,
-            text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+            //text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
             title: {text: "Belly Button Washing Frequency", color: "black", font: {size: 16}},
             // title: {text: "Scrubs per Week", font: { size: 12}},
             gauge: {
@@ -232,8 +232,8 @@ function fn_gaugeChart(subjectID) {
               //   {range: [7, 8], color: "#BDB76B"},
               //   {range: [8, 9], color: "#808000"}
 
-              // color reference:  
-              // https://www.color-meanings.com/wp-content/uploads/color-chart.png
+                // color reference:  
+                // https://www.color-meanings.com/wp-content/uploads/color-chart.png
               steps: [
                 {range: [0, 1], color: "#B9D9EB"},    //light blue
                 {range: [1, 2], color: "#99D6EA"},    
@@ -270,7 +270,6 @@ function fn_gaugeChart(subjectID) {
 });
 }
 
-
 // ------------------------------------------------------------------------------------
 // 6.  Update all of the plots any time that a new sample is selected. 
 //     NOTE:  optionChanged ==> Reference line 25 in the index.html 
@@ -282,4 +281,4 @@ function optionChanged(newSelection) {
   fn_gaugeChart(newSelection);
 };
 
-initialize ();
+fn_initialize ();
